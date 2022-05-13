@@ -18,15 +18,18 @@ def golden_selection_method(p:float = 3, q:float = 8, eps:float = .001):
     with open('points.txt', 'w') as file:
         pass
     iter = 0
+    y = [f(_) for _ in x]
     while abs(q - p)/2 >= eps:
-        if f(x[0]) < f(x[1]):
+        if y[0] < y[1]:
             q = x[1]
             x[1] = x[0]
             x[0] =  p + K[0] * (q - p)
+            y[1], y[0] = y[0], f(x[0])
         else:
             p = x[0]
             x[0] = x[1]
             x[1] = p + K[1] * (q - p)
+            y[0], y[1] = y[1], f(x[1])
         iter += 1
         with open('points.txt', 'a') as file:
             file.write(str(q) + " " + str(p) + "\n")
